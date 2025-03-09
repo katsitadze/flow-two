@@ -8,7 +8,7 @@ const Register:React.FC = () => {
     const onSubmit= async (formData:IAuth)=> {
     
      try{
-      const res=await $axios.post('/registration ',{...formData})
+      const res=await $axios.post('/registration',{...formData})
       console.log(res.data);
      } catch (error){
       console.log(error);

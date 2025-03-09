@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from 'react'
 import { AuthProps } from '../../interface/auth.interface'
 import { TextField,Button, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -8,12 +9,15 @@ import { TextField,Button, Typography } from '@mui/material'
 const AuthForms:React.FC<AuthProps> = ({type,onSubmit}) => {
  const [email, setEmail]=useState('')
  const [password, setPassword]=useState ('')
+const navigate=useNavigate()
 
  const handleSubmit = (e:FormEvent <HTMLFormElement>) => {
         e.preventDefault()
         onSubmit({email, password})
+        navigate('/users') 
         setEmail('')
         setPassword('')
+       
  }
   return (
     <form onSubmit={handleSubmit} style ={{width:'500px', margin:'50px auto', display:'flex', flexDirection:'column'}}>

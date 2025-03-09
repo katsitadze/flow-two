@@ -15,6 +15,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { IRoute } from '../../routes/routes';
 import { Outlet, useNavigate } from 'react-router-dom';
 import AuthButton from '../AuthButton';
+import { useAuthContext } from '../../context/authContext';
+import { CircularProgress } from '@mui/material';
 
 
  interface  MuiNavbar {
@@ -22,14 +24,13 @@ import AuthButton from '../AuthButton';
     
  }
 
-const settings = ['Profile', 'Logout'];
-
 
 const MuiNavbar:React.FC<MuiNavbar> = ({routes}) => {
-  const auth={token:false}
+  const {user:{email}, loading,logout}=useAuthContext()
     const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const settings = [{title:'Profile', action:()=>{navigate('/profile')}},{title:'Logout',action :logout}];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -100,7 +101,8 @@ const MuiNavbar:React.FC<MuiNavbar> = ({routes}) => {
               </Button>
             ))}
           </Box>
-          { auth.token? <Box sx={{ flexGrow: 0 }}>
+          { loading ? <CircularProgress/> 
+          :email ? <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -122,9 +124,12 @@ const MuiNavbar:React.FC<MuiNavbar> = ({routes}) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+              {settings.map(({title,action}) => (
+                <MenuItem key={title} onClick={handleCloseUserMenu}>
+                  <Button onClick={action}>
+                  <Typography sx={{ textAlign: 'center' }}>{title}</Typography>
+                  </Button>
+                 
                 </MenuItem>
               ))}
             </Menu>

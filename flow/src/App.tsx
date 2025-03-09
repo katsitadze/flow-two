@@ -1,4 +1,5 @@
 
+import { AuthProvider } from './context/authContext'
 import Router from './routes/Router'
 
 const  App:React.FC = () => {
@@ -6,7 +7,10 @@ const  App:React.FC = () => {
 
   return (
     <>
-      <Router/>
+      <AuthProvider>
+           <Router/>
+      </AuthProvider>
+ 
     </>
   )
 }

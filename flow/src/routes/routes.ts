@@ -8,5 +8,6 @@ export const rautes = [
     {path:'/', label:'Home'},
     {path:'/about', label:'About'},
     {path:'/contact', label:'Contact'},
+    {path:'/users', label:'users'}
 
 ]
